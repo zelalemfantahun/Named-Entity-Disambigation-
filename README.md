@@ -1,4 +1,4 @@
-Named Entity Disambigation (NED)
+(NED)
 ==========================
 Definition
 ----------

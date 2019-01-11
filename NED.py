@@ -8,7 +8,7 @@ import sys
 english_stopwords = stopwords.words('english')
 nlp = spacy.load('en_core_web_sm')
 text = str(input("Enter Sentence: "))
-txt = open("data/input_data.txt")
+# txt = open("data/input_data.txt")
 # text = txt.read().replace('.','')
 offline_dic = open('output/disambiguate_offline_dict.p', 'rb')
 offline_dic = pickle.load(offline_dic)
@@ -22,9 +22,6 @@ class Named_entity_disambig:
     def Candidate_generation(self):
 
         doc = nlp(text)
-        print("Input sentence")
-        print('================')
-        print(text)
         named_entity_dict = {}
         named_entity_key_list = []
         named_entity_value_list = []
@@ -51,10 +48,17 @@ class Named_entity_disambig:
             entity_from_text= [k for k, v in named_entity_dict.items() if entity in v]
             for item in entity_from_text:
                 entity_from_text_list.append(item)
-        # print(entity_from_text_list)
-        print('Entities which are identified from the input sentence')
-        print('======================================================')
-        print(entity_from_text_list)
+
+
+        if not entity_from_text_list:
+            print(' ')
+            print('No named entity found in the input text')
+            print('========================================')
+        else:
+            print(' ')
+            print('Entities which are identified from the input sentence')
+            print('======================================================')
+            print(entity_from_text_list)
 
         for key, value in offline_dic.items():
             offline_dic_list.append(key)
@@ -77,8 +81,9 @@ class Named_entity_disambig:
             return big_final_dict
 
     def candidate_ranking(self, big_final_dict):
+        print(' ')
         print("Disambiguated Entity Link")
-        print("========================")
+        print("==========================")
         big_list = []
 
         for dict in big_final_dict:
